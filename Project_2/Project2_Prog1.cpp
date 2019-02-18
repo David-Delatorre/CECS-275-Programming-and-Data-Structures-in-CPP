@@ -147,7 +147,7 @@ int areaCount(char array[][10], int x, int y, int c)
         areaCount(array, x, y - 1, c + 1);//check left
         areaCount(array, x + 1, y, c + 1);//check up
         areaCount(array, x - 1, y, c + 1);//check down
-        return c;
+        return 0;
     }
     return c;
     
