@@ -125,6 +125,7 @@ void traverse(char array[][10])
                 area++;
                 count = 0;
             }
+            
         }
     }
 }
@@ -144,6 +145,7 @@ int areaCount(char array[][10], int x, int y, int c)
     // {
     //     return 
     // }
+    cout << x << " " << y << endl;
     c = c + areaCount(array, x, y + 1, c);//check right 
     c = c + areaCount(array, x, y - 1, c);//check left
     c = c + areaCount(array, x + 1, y, c);//check up
