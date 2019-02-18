@@ -121,7 +121,7 @@ void traverse(char array[][10])
             if (array[i][j] == 'o')
             {
                 count = areaCount(array, i, j, count);
-                cout << "Area" << area << " = " << count << endl;
+                cout << "Area " << area << " size = " << count << endl;
                 area++;
                 count = 1;
             }
@@ -149,6 +149,6 @@ int areaCount(char array[][10], int x, int y, int c)
         areaCount(array, x - 1, y, c + 1);//check down
         return c;
     }
-    return c;
+    return 0;
     
 }
