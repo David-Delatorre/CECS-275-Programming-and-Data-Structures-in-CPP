@@ -146,9 +146,9 @@ int areaCount(char array[][10], int x, int y, int c)
     //     return 
     // }
     cout << x << " " << y << " " << c << endl;
-    c = c + areaCount(array, x, y + 1, c);//check right 
-    c = c + areaCount(array, x, y - 1, c);//check left
-    c = c + areaCount(array, x + 1, y, c);//check up
-    c = c + areaCount(array, x - 1, y, c);//check down
+    areaCount(array, x, y + 1, c);//check right 
+    areaCount(array, x, y - 1, c);//check left
+    areaCount(array, x + 1, y, c);//check up
+    areaCount(array, x - 1, y, c);//check down
     return c;
 }
