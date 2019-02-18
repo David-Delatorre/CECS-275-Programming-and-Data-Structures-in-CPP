@@ -136,7 +136,7 @@ int areaCount(char array[][10], int x, int y, int c)
 {
     if (array[x][y] == '#')
     {
-        return 0;
+        return c;
     }
     
     //c++;
