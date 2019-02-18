@@ -149,6 +149,6 @@ int areaCount(char array[][10], int x, int y, int c)
         c = c + areaCount(array, x - 1, y, c + 1);//check down
         return c;
     }
-    return 0;
+    return c;
     
 }
