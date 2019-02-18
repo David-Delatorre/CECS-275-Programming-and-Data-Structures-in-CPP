@@ -15,7 +15,7 @@ int getInt();
 void readGrid(char array[][10], string filename);
 void displayGrid(char array[][10]);
 void traverse(char array[][10]);
-int areaCount(char array[][10], int x, int y, int count, int i);
+int areaCount(char array[][10], int x, int y, int i);
 
 
 
@@ -113,31 +113,35 @@ void displayGrid(char array[][10])
 void traverse(char array[][10])
 {
     int count = 0;
+    int area = 1;
     for (int i = 0; i < 10; i++) 
     {   
         for (int j = 0; j < 10; j++)
         {
             if (array[i][j] == 'o')
             {
-                count = areaCount(array, i, j, 9, 1);
+                count = areaCount(array, i, j, count);
+                cout << "Area" << area << " = " << count endl;
+                area++;
+                count = 0;
             }
-        }
-        if (count > 0)
-        {
-            cout << "Area" << i+1 << " = " << count;
-            cout << "thank u, next" << endl;
-            count = 0;
         }
     }
 }
 
 //row = x; col = y; size = area size; i = count;
 //change found os to #
-int areaCount(char array[][10], int x, int y, int size, int i)
+int areaCount(char array[][10], int x, int y, int c)
 {
-    if (x < i)
+    if (array[x][y] == '#')
     {
         return 0;
     }
-    return 0;
+    
+    c++;
+    array[x][y] = '#';
+    areaCount(array, x, y + 1, c);//check right 
+    areaCount(array, x, y - 1, c);//check left
+    areaCount(array, x + 1, y, c);//check up
+    areaCount(array, x - 1, y, c);//check down
 }
