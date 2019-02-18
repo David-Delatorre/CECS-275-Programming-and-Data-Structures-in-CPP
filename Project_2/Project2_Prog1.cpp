@@ -14,7 +14,7 @@ using namespace std;
 int getInt();
 void readGrid(char array[][10], string filename);
 void displayGrid(char array[][10]);
-int traverse(char array[][10]);
+void traverse(char array[][10]);
 int areaCount(char array[][10], int x, int y, int count, int i);
 
 
@@ -43,7 +43,7 @@ void readGrid(char array[][10], string filename)
     {   
         for (int j = 0; j < 10; j++)
         {
-            cout << array[k][j];
+            array[k][j] = '#';
         }
         cout << endl;
     }
