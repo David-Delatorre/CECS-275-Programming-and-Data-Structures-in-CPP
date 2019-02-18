@@ -112,7 +112,7 @@ void displayGrid(char array[][10])
 
 void traverse(char array[][10])
 {
-    int count = 0;
+    int count = 1;
     int area = 1;
     for (int i = 1; i < 9; i++) 
     {   
@@ -123,7 +123,7 @@ void traverse(char array[][10])
                 count = areaCount(array, i, j, count);
                 cout << "Area" << area << " = " << count << endl;
                 area++;
-                count = 0;
+                count = 1;
             }
             
         }
@@ -139,16 +139,16 @@ int areaCount(char array[][10], int x, int y, int c)
         return 0;
     }
     
-    c++;
+    //c++;
     array[x][y] = '#';
     // if (array[x][y+1] == 'o')
     // {
     //     return 
     // }
     cout << x << " " << y << " " << c << endl;
-    areaCount(array, x, y + 1, c);//check right 
-    areaCount(array, x, y - 1, c);//check left
-    areaCount(array, x + 1, y, c);//check up
-    areaCount(array, x - 1, y, c);//check down
+    areaCount(array, x, y + 1, c + 1);//check right 
+    areaCount(array, x, y - 1, c + 1);//check left
+    areaCount(array, x + 1, y, c + 1);//check up
+    areaCount(array, x - 1, y, c + 1);//check down
     return c;
 }
