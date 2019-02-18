@@ -134,21 +134,21 @@ void traverse(char array[][10])
 //change found os to #
 int areaCount(char array[][10], int x, int y, int c)
 {
-    if (array[x][y] == '#')
+    if (array[x][y] == 'o')
     {
+        //c++;
+        array[x][y] = '#';
+        // if (array[x][y+1] == 'o')
+        // {
+        //     return 
+        // }
+        cout << x << " " << y << " " << c << endl;
+        areaCount(array, x, y + 1, c + 1);//check right 
+        areaCount(array, x, y - 1, c + 1);//check left
+        areaCount(array, x + 1, y, c + 1);//check up
+        areaCount(array, x - 1, y, c + 1);//check down
         return c;
     }
-    
-    //c++;
-    array[x][y] = '#';
-    // if (array[x][y+1] == 'o')
-    // {
-    //     return 
-    // }
-    cout << x << " " << y << " " << c << endl;
-    c = areaCount(array, x, y + 1, c + 1);//check right 
-    c = areaCount(array, x, y - 1, c + 1);//check left
-    c = areaCount(array, x + 1, y, c + 1);//check up
-    c = areaCount(array, x - 1, y, c + 1);//check down
     return c;
+    
 }
