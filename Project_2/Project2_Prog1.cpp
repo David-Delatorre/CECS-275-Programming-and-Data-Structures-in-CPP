@@ -129,7 +129,7 @@ void traverse(char array[][10])
     }
 }
 
-//row = x; col = y; size = area size; i = count;
+//row = x; col = y; c = count;
 //change found os to #
 int areaCount(char array[][10], int x, int y, int c)
 {
@@ -140,9 +140,13 @@ int areaCount(char array[][10], int x, int y, int c)
     
     c++;
     array[x][y] = '#';
-    areaCount(array, x, y + 1, c);//check right 
-    areaCount(array, x, y - 1, c);//check left
-    areaCount(array, x + 1, y, c);//check up
-    areaCount(array, x - 1, y, c);//check down
+    // if (array[x][y+1] == 'o')
+    // {
+    //     return 
+    // }
+    c = c + areaCount(array, x, y + 1, c);//check right 
+    c = c + areaCount(array, x, y - 1, c);//check left
+    c = c + areaCount(array, x + 1, y, c);//check up
+    c = c + areaCount(array, x - 1, y, c);//check down
     return c;
 }
