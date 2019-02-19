@@ -45,7 +45,6 @@ void readGrid(char array[][10], string filename)
         {
             array[k][j] = '#';
         }
-        cout << endl;
     }
     
     fstream file;
@@ -112,7 +111,7 @@ void displayGrid(char array[][10])
 
 void traverse(char array[][10])
 {
-    int count = 1;
+    int count = 0;
     int area = 1;
     for (int i = 1; i < 9; i++) 
     {   
@@ -123,7 +122,7 @@ void traverse(char array[][10])
                 count = areaCount(array, i, j, count);
                 cout << "Area " << area << " size = " << count << endl;
                 area++;
-                count = 1;
+                count = 0;
             }
             
         }
@@ -134,22 +133,19 @@ void traverse(char array[][10])
 //change found os to #
 int areaCount(char array[][10], int x, int y, int c)
 {
+    
     if (array[x][y] == 'o')
     {
-        //c++;
         array[x][y] = '#';
-        // if (array[x][y+1] == 'o')
-        // {
-        //     return 
-        // }
-        cout << x << " " << y << " " << c << endl;
-        areaCount(array, x, y + 1, c + 1);//check right 
-        areaCount(array, x, y - 1, c + 1);//check left
-        areaCount(array, x + 1, y, c + 1);//check up
-        areaCount(array, x - 1, y, c + 1);//check down
+        c++;
+        //cout << x << " " << y << " " << c << endl;
+        c = areaCount(array, x, y + 1, c);//check right 
+        c = areaCount(array, x, y - 1, c);//check left
+        c = areaCount(array, x + 1, y, c);//check up
+        c = areaCount(array, x - 1, y, c);//check down
+        //cout << c << endl;
         return c;
     }
-    c++;
     return c;
     
 }
