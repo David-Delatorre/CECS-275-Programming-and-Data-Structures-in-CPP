@@ -1,6 +1,11 @@
 /*Louis Monfiero
 2/5/19
-Description: etc.
+Description: Program reads a grid from a text file named 'Grid#.txt' 
+and places the grid into the middle of a 10x10 array
+The grid is then displayed to the user in an 8x8 array
+and counts the number of consecutive O's (left, right, up, or down)
+and returns the number of o's per area. The rest of the array
+is populated with #s
 */
 
 #include <iostream>
@@ -11,11 +16,35 @@ Description: etc.
 using namespace std;
 
 
+//input validation
+//@returns an integer number
 int getInt();
+
+//reads the grid found in file grid#.txt and copies the contents into the center of a 10x10 array populated
+//with #s
+//@param = passes a 10x10 array
+//@param = passes in a string containing the name of the file to be read
 void readGrid(char array[][10], string filename);
+
+//displays the 8x8 grid inside the 10x10 grid
+//@param = passes in an array to be populated by the grid
 void displayGrid(char array[][10]);
+
+//checks each spot in the array to see if it spots a letter o
+//if an o is spotted, the function areaCount is called in to count the number of 
+//consecutive Os spotted and how many different sections of Os there are
+//@param = passes the 10x10 array and checks it for Os
 void traverse(char array[][10]);
-int areaCount(char array[][10], int x, int y, int i);
+
+//recursive function that counts how many Os are in the array passed
+//checks right, then left, then up, and then down
+//recursively calls itself to check adjacent locations for Os
+//@param array = passes in the 10x10 array to be read
+//@param x = rows
+//@param y = columns
+//@param c = count the number of Os spotted
+//@return = returns the amount of Os spotted in a given area/section
+int areaCount(char array[][10], int x, int y, int c);
 
 
 
@@ -30,8 +59,6 @@ int main()
     readGrid(gridAr, gridName);
     displayGrid(gridAr);
     traverse(gridAr);
-
-
     return 0;
 }
 
@@ -70,7 +97,7 @@ void readGrid(char array[][10], string filename)
     }
     else
     {
-        cout << "File not found" << endl;
+        cout << "If an item does not appear in our records, then it does not exist." << endl;
     }
     
 }
@@ -91,7 +118,7 @@ int getInt( )
 			cin.clear(); 
 			string invalid;
 			cin >> invalid;
-			cout<< "Please enter a valid number (1 - 9): ";
+			cout<< "Please try again (a number): ";
 		}
 	}
 	return input;
@@ -109,6 +136,7 @@ void displayGrid(char array[][10])
     }
 }
 
+//checks grid for an O from array[1][1] to array[9][9]
 void traverse(char array[][10])
 {
     int count = 0;
@@ -131,6 +159,12 @@ void traverse(char array[][10])
 
 //row = x; col = y; c = count;
 //change found os to #
+//checks right and if it is an o, increments c;
+//after checking right, it will recursively continue to check right until no more Os are found
+//when there is no more Os, it will check the left side until no more Os are found
+//there is no double counting as any found O is replaced with a #
+//after going left, it will then go up, and then lastly down
+//after finally counting the amount of Os, it returns the amount of Os spotted
 int areaCount(char array[][10], int x, int y, int c)
 {
     
