@@ -43,7 +43,6 @@ void traverse(char array[][10]);
 //@param x = rows
 //@param y = columns
 //@param c = count the number of Os spotted
-//@return = returns the amount of Os spotted in a given area/section
 int areaCount(char array[][10], int x, int y, int c);
 
 
