@@ -42,7 +42,7 @@ int main()
 int * populate(int size)
 {
     srand(time(NULL));
-    int array[size];
+    int* array = new int(size);
     for (int i = 0; i < size; i++)
     {
         array[i] = (rand() % 100 + 1);
@@ -55,8 +55,8 @@ void display(int *ptrArray, int size)
     int counter = 0;
     for (int i = 0; i < size; i++)
     {
-        if ((i - size) != 0) cout << *(ptrArray + i) << ", ";
-        else cout << *(ptrArray + i);
+        if ((i + 1) != size) cout << *ptrArray[i] << ", ";
+        else cout << *ptrArray[i];
         
         counter++;
         if (counter == 10)
