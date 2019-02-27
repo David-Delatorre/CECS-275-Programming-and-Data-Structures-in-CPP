@@ -24,8 +24,9 @@ void menu();
 
 int main()
 {
-    menu();
+    //menu();
     int arraySize;
+	cout << "Enter array size: ";
     arraySize = GetPositiveInt();
 	int *ptrArray;
     ptrArray = populate(arraySize);
@@ -54,8 +55,8 @@ void display(int *ptrArray, int size)
     int counter = 0;
     for (int i = 0; i < size; i++)
     {
-        if ((i - size) != 0) cout << ptrArray[i] << ", ";
-        else cout << ptrArray[i];
+        if ((i - size) != 0) cout << *(ptrArray + i) << ", ";
+        else cout << *(ptrArray + i);
         
         counter++;
         if (counter == 10)
