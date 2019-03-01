@@ -11,53 +11,54 @@
 #include <string>
 using namespace std;
 
-//Descr:
+//Descr: dynamically populates an array with the amount input by a user
 //@param = Passes in a size (inputted by the user) of said array
+//@return = returns array of randomized numbers (1 - 100)
 int * populate(int size);
 
-//Descr:
+//Descr: displays array of numbers (10 per row)
 //@param = Passes in a pointer to an array
 //@param = Passes in a size (inputted by the user) of said array
 void display(int *ptrArray, int size);
 
-//Descr:
-//@param = 
-void swap(int num1, int num2);
+//Descr: goes into an array and swaps 2 numbers; used by sort() and shuffle()
+//@param = passes in pointer to integer one to swap
+//@param = passes in pointer to integer 2 to swap
+void swap(int *num1, int *num2);
 
-//Descr:
+//Descr: goes into an array and uses the swap function using selection sort
 //@param = Passes in a pointer to an array
 //@param = Passes in a size (inputted by the user) of said array
 void sort(int *ptrArray, int size);
 
-//Descr:
+//Descr: shuffles numbers in array to random locations in said array
 //@param = Passes in a pointer to an array
 //@param = Passes in a size (inputted by the user) of said array
 void shuffle(int *ptrArray, int size);
 
-//Descr:
+//Descr: finds the largest number in an array
 //@param = Passes in a pointer to an array
 //@param = Passes in a size (inputted by the user) of said array
+//@return = returns the largest number in an array
 int max(int *ptrArray, int size);
 
-//Descr:
-//@param = 
+//Descr: input validation; user can only input a positive integer
+//@return = returns a positive integer input by the user 
 int GetPositiveInt();
 
-//Descr:
-//@param = 
+//Descr: input validation; user can only input an integer between two points (low and high)
+//@param = low - floor range value
+//@param = high - ceiling range value
+//@return = returns integer input by the user
 int GetIntRange(int low, int high);
 
-//Descr:
-//@param = 
+//Descr: displays the menu (options 1 to 5)
 void menu();
-
-
 
 int main()
 {
 	int choice = 0;
 	int *ptrArray;
-	// bool loop = true;
 	cout << "Enter array size: ";
     int arraySize = GetPositiveInt();
     ptrArray = populate(arraySize);
@@ -76,6 +77,7 @@ int main()
     return 0;
 }
 
+//populates an array with a size input by the user
 int * populate(int size)
 {
     srand(time(NULL));
@@ -88,6 +90,7 @@ int * populate(int size)
     return array;
 }
 
+//displays the array to the user
 void display(int *ptrArray, int size)
 {
     int counter = 0;
@@ -106,6 +109,7 @@ void display(int *ptrArray, int size)
     }
 }
 
+//swaps two integers; used by sort and shuffle
 void swap(int *num1, int *num2)
 {
     int temp;
@@ -114,6 +118,7 @@ void swap(int *num1, int *num2)
 	*num2 = temp;
 }
 
+//sorts values in array from lowest to highest
 void sort(int *ptrArray, int size)
 {
 	int min;
@@ -128,6 +133,7 @@ void sort(int *ptrArray, int size)
 	}
 }
 
+//shuffles values in the array several times
 void shuffle(int *ptrArray, int size)
 {
 	srand(time(NULL));
@@ -140,6 +146,7 @@ void shuffle(int *ptrArray, int size)
 	}
 }
 
+//finds and returns largest value in the array
 int max(int *ptrArray, int size)
 {
 	int maximum = 0;
@@ -153,6 +160,7 @@ int max(int *ptrArray, int size)
 	return maximum;
 }
 
+//prompts user to enter a positive integer
 int GetPositiveInt()
 {
     int input = 0;
@@ -174,6 +182,7 @@ int GetPositiveInt()
 	return input;
 }
 
+//Input validation; in the case of main, we used this for selecting between 1, 2, 3, 4, and 5
 int GetIntRange(int low, int high)
 {
     int input = 0;
@@ -195,6 +204,7 @@ int GetIntRange(int low, int high)
 	return input;
 }
 
+//prints out menu and options
 void menu()
 {
     cout << "\n1. Display\n2. Sort\n3. Shuffle\n4. Max\n5. Quit\n";

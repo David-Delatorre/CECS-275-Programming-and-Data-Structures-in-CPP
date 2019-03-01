@@ -1,4 +1,6 @@
 /*Louis Monfiero
+016336266
+Project 2
 2/5/19
 Description: Program reads a grid from a text file named 'Grid#.txt' 
 and places the grid into the middle of a 10x10 array
@@ -45,8 +47,6 @@ void traverse(char array[][10]);
 //@param c = count the number of Os spotted
 int areaCount(char array[][10], int x, int y, int c);
 
-
-
 int main()
 {
     //Passes grid into gridAr
@@ -56,11 +56,15 @@ int main()
     choice = getInt();
     gridName = "grid"+to_string(choice)+".txt";
     readGrid(gridAr, gridName);
-    displayGrid(gridAr);
-    traverse(gridAr);
+    if (choice == 1 | choice == 2 | choice == 3 | choice == 4)
+    {
+        displayGrid(gridAr);
+        traverse(gridAr);
+    }
     return 0;
 }
 
+//Reads grid and transfers characters from grid into the array to populate it with #s and os
 void readGrid(char array[][10], string filename)
 {
     int ccounter = 1;
@@ -101,7 +105,7 @@ void readGrid(char array[][10], string filename)
     
 }
 
-
+//input validation
 int getInt( ) 
 {
 	int input = 0;
@@ -123,6 +127,7 @@ int getInt( )
 	return input;
 }
 
+//displays the 8x8 grid inside the array without showing the out of bounds #s
 void displayGrid(char array[][10])
 {   
     for (int i = 1; i < 9; i++) 
@@ -179,6 +184,5 @@ int areaCount(char array[][10], int x, int y, int c)
         //cout << c << endl;
         return c;
     }
-    return c;
-    
+    return c;  
 }
