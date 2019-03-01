@@ -2,7 +2,7 @@
  Louis Monfiero
  016336266 
  2/26/19
- Descr: idk yet
+ Descr: Introduction to pointers; Use pointers to arrays to manipulate an array
  */
 #include <iostream>
 #include <cstdlib>
