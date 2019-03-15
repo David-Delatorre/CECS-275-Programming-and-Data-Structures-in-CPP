@@ -11,7 +11,7 @@ class Player
     //dice is a set array of 3 dice
     //points is the amount of points garnered while playing the game
     //size is the amount of dice tossed/size of the array
-        int dice[3];
+        Die dice[3];
         int points;
         int size;
     
@@ -24,8 +24,7 @@ class Player
         bool winCond1();//series
         bool winCond2();//pair
         bool winCond3();//three of a kind
-        bool takeTurn();//calls every other function in this class; practically the main() of this class
-        bool getYesNo();//asks whether or not the user wants to play again
+        void takeTurn();//calls every other function in this class; practically the main() of this class
 };
 
 #endif

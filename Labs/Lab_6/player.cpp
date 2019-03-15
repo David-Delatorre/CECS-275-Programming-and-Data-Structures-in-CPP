@@ -28,12 +28,12 @@ void Player::sortDie()
 		min = i;
 		for (int j = i + 1; j < size; j++)
 		{
-			if (dice[j] < dice[min])	min = j;
+			if (dice[j].getValue() < dice[min].getValue())	min = j;
 		}
         //sorts the die using selection sort
-		temp = dice[min];
-        dice[min] = dice[i];
-        dice[i] = temp; 
+		temp = dice[min].getValue();
+        dice[min].setValue(dice[i].getValue());//) = dice[i].getValue();
+        dice[i].setValue(temp);// = temp; 
 	}
 }
 
@@ -47,9 +47,9 @@ void Player::displayVal()
     {
         if (size - 1 == i)
         {
-            cout << "D" << i+1 << " = " << dice[i] << endl;
+            cout << "D" << i+1 << " = " << dice[i].getValue() << endl;
         }
-        else cout << "D" << i+1 << " = " << dice[i] << ", ";
+        else cout << "D" << i+1 << " = " << dice[i].getValue() << ", ";
     }
 }
 
@@ -60,7 +60,7 @@ void Player::displayVal()
 //@return = returns true if the dice are in series and false otherwise
 bool Player::winCond1()//series +2 points
 {
-    int d1 = dice[0], d2 = dice[1], d3 = dice[2];
+    int d1 = dice[0].getValue(), d2 = dice[1].getValue(), d3 = dice[2].getValue();
     if (d3 == d2 + 1 && d2 == d1 + 1)   return true;
     return false;
 }
@@ -72,7 +72,7 @@ bool Player::winCond1()//series +2 points
 //@return = returns true if the dice contains a pair and false otherwise
 bool Player::winCond2()//pair +1 point
 {
-    int d1 = dice[0], d2 = dice[1], d3 = dice[2];
+    int d1 = dice[0].getValue(), d2 = dice[1].getValue(), d3 = dice[2].getValue();
     if (d1 == d2 || d2 == d3 || d1 == d3)   return true;
     return false;
 }
@@ -84,7 +84,7 @@ bool Player::winCond2()//pair +1 point
 //@return = returns true if the dice contains a three of a kind and false otherwise
 bool Player::winCond3()//three of a kind +3 points
 {
-    int d1 = dice[0], d2 = dice[1], d3 = dice[2];
+    int d1 = dice[0].getValue(), d2 = dice[1].getValue(), d3 = dice[2].getValue();
     if (d1 == d2 && d2 == d3)   return true;
     return false;
 }
@@ -92,15 +92,14 @@ bool Player::winCond3()//three of a kind +3 points
 //Creates a Die constructor called die from die.cpp/die.h
 //This allows us to use functions regarding rolling the dice and getting values from them 
 //These functions are found in die.cpp and die.h
-//@return = returns a true if the user decides to play again, otherwise returns false
-bool Player::takeTurn()
+void Player::takeTurn()
 {
-    Die die;
+    // Die die;
     //Assigns 3 random integers to the array of the 3 dice rolled
     //die calls the roll() function which returns a random integer (1-6)
     for (int i = 0; i < size; i++)
     {
-        dice[i] = die.roll();
+        dice[i].roll();
     }
 
     //Displays the random dice that have just been rolled
@@ -131,26 +130,5 @@ bool Player::takeTurn()
     //Prompts the player to input a yes or no whether or not they want to play again
     points = getPoints();
     cout << "Score = " << points << endl;
-    cout << "Play again? (Y/N): ";
-    return getYesNo();
-}
-
-//Input validation; checks whether or not the user inputs a Yes or a No as well as 
-//all 5 variations of Yes/No; if the input is invalid, prompts user to try again until success
-//@return = returns a true if the user says yes and a false if the user says no
-bool Player::getYesNo( ) 
-{
-	string input;
-	bool valid = false;
-	while(!valid) {
-		cin >> input;
-		if(input == "yes" || input == "Yes" || input == "YES" || input == "Y" || input == "y") {
-			return true;
-		} else if(input == "no" || input == "No" || input == "NO" || input == "N" || input == "n") {
-			return false;
-		} else {
-			cout<< "Invalid Input (Y/N)" << endl;
-		}
-	}
-	return false;
+    // cout << "Play again? (Y/N): ";
 }
