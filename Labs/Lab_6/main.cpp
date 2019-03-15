@@ -34,7 +34,6 @@ int main()
         play.takeTurn();
         cout << "Play again? (Y/N): ";
         keepPlay = getYesNo();
-        //cout << endl << die.roll() << endl;
     }
     //Displays final score after the user quits
     cout << "Game Over!\nFinal score = " << play.getPoints() << " points.";
