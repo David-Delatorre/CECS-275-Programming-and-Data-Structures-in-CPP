@@ -1,17 +1,17 @@
 #include "contact.h"
 
-contact::contact()
+Contact::Contact()
 {
     firstName = "Louis";
     lastName = "Monfiero";
-    phoneNumber = "7142208888";
+    phoneNumber = "220-8888";
     address = "99 Santa Monica St.";
-    city = "Manila";
+    city = "Cypress";
     zipCode = "90630";
     state = "California";
 }
 
-contact::contact(string fiN, string lN, string pN, string addr, string cT, string zC, string s)
+Contact::Contact(string fiN, string lN, string pN, string addr, string cT, string zC, string s)
 {
     firstName = fiN;
     lastName = lN;
@@ -22,48 +22,101 @@ contact::contact(string fiN, string lN, string pN, string addr, string cT, strin
     state = s;
 }
 
-void contact::display()
+string Contact::get_fn()
 {
-    cout<< firstName <<" "<< lastName <<": "<< phoneNumber << "\n" << address + " " + city +", "+ state + " " + zipCode;
+    return firstName;
+}
+
+string Contact::get_ln()
+{
+    return lastName;
+}
+
+string Contact::get_num()
+{
+    return phoneNumber;
+}
+
+string Contact::get_addy()
+{
+    return address;
+}
+
+string Contact::get_city()
+{
+    return city;
+}
+
+string Contact::get_zip()
+{
+    return zipCode;
+}
+
+void Contact::set_fn(string fn)
+{
+    firstName = fn;
+}
+
+void Contact::set_ln(string ln)
+{
+    lastName = ln;
+}
+
+void Contact::set_num(string pn)
+{
+    phoneNumber = pn;
+}
+
+void Contact::set_city(string town)
+{
+    city = town;
+}
+
+void Contact::set_zip(string zc)
+{
+    zc = zipCode;
+}
+
+void Contact::set_state(string st)
+{
+    state = st;
 }
 
 
-//I've got absolutely no idea what I'm doing in here kms
-// void readFile(vector<string> test)
-// {
-//     int ccounter = 0;
-//     int rcounter = 0;
 
-//     fstream file;
-//     string line;
-//     file.open("addresses.txt", ios::in);
-//     if (file)
-//     {
-//         while(getline(file, line))
-//         {   
-//             for (int i = 0; i < line.length(); i++)
-//             {   
-                    // for (int j = 0; j < 7; j++)
-                    // {
-                    //     if (j == 1)
-                    //     {
-                    //         firstName = [j];
-                    //     }
-                    // }
-//                 if ()
-//                 {
-//                     rcounter++;
-//                     ccounter = 0;
-//                 }
-//                 array[rcounter][ccounter] = line[i];
-//                 ccounter++;
-//             }
-//         }
-//         file.close();
-//     }
-//     else
-//     {
-//         cout << "File not found" << endl;
-//     }
+int Contact::operator<(Contact con1, Contact con2)
+{
+    if (con1.get_ln.compare(con2.get_ln) == 0)
+    {
+        return (con1.get_fn.compare(con2.get_fn));
+    }
+    return con1.get_ln.compare(con2.get_ln);
     
-// }
+}
+
+istream &operator >> (istream &in, Contact &con)
+{ 
+    cout << "Enter First Name: ";
+    cin >> con.firstName;
+    cout << "Enter Last Name: ";
+    cin >> con.lastName;
+    cout << "Enter Phone #: ";
+    cin >> con.phoneNumber;
+    cout << "Enter Address: \n";
+    cin >> con.address;
+    cout << "Enter City: ";
+    cin >> con.city;
+    cout << "Enter Zip-Code: ";
+    cin >> con.zipCode;
+    cout << "Enter State: ";
+    cin >> con.state;
+    return in;
+}
+
+ostream &operator<< (ostream &out, Contact con)
+{
+    out << con.firstName << " " << con.lastName << ": " << con.phoneNumber << endl << con.address + " " + con.city + ", " + con.state + " " + con.zipCode;
+    return out;
+}
+
+

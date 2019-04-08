@@ -10,7 +10,7 @@
 
 using namespace std;
 
-class contact
+class Contact
 {
     private:
         string firstName;
@@ -22,10 +22,26 @@ class contact
         string state;
 
     public:
-        contact();
-        contact(string fiN, string lN, string pN, string addr, string cT, string zC, string st);
-        void display();
-        void readFile(vector<string> test);
+        Contact();
+        Contact(string fiN, string lN, string pN, string addr, string cT, string zC, string st);
+        string get_fn();
+        string get_ln();
+        string get_num();
+        string get_addy();
+        string get_city();
+        string get_zip();
+
+        void set_fn(string fn);
+        void set_ln(string ln);
+        void set_num(string pn);
+        void set_city(string town);
+        void set_zip(string zc);
+        void set_state(string st);
+
+        int operator<(Contact con1, Contact con2);
+        Contact operator==(Contact con);
+        friend ostream &operator<< (ostream &out, Contact con);
+        friend istream &operator >> (istream &in, Contact &con);
 };
 
 #endif 
