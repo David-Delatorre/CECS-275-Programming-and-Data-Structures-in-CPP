@@ -1,27 +1,23 @@
 #include "contact.h"
 
+#include <iostream>
+using namespace std;
+
 Contact::Contact()
 {
-    firstName = "Louis";
-    lastName = "Monfiero";
-    phoneNumber = "220-8888";
-    address = "99 Santa Monica St.";
-    city = "Cypress";
-    zipCode = "90630";
-    state = "California";
+    //DEFAULT CONSTRUCTOR w/ no body
+    // firstName = "Louis";
+    // lastName = "Monfiero";
+    // phoneNumber = "220-8888";
+    // address = "99 Santa Monica St.";
+    // city = "Cypress";
+    // zipCode = "90630";
+    // state = "California";
 }
 
-Contact::Contact(string fiN, string lN, string pN, string addr, string cT, string zC, string s)
-{
-    firstName = fiN;
-    lastName = lN;
-    phoneNumber = pN;
-    address = addr;
-    city = cT;
-    zipCode = zC;
-    state = s;
-}
-
+/////////////////////////////////////////////////////////////////////////////////////
+//GETTERS
+/////////////////////////////////////////////////////////////////////////////////////
 string Contact::get_fn()
 {
     return firstName;
@@ -52,6 +48,14 @@ string Contact::get_zip()
     return zipCode;
 }
 
+string Contact::get_state()
+{
+    return state;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////
+//SETTERS
+/////////////////////////////////////////////////////////////////////////////////////
 void Contact::set_fn(string fn)
 {
     firstName = fn;
@@ -67,6 +71,11 @@ void Contact::set_num(string pn)
     phoneNumber = pn;
 }
 
+void Contact::set_addy(string addy)
+{
+    address = addy;
+}
+
 void Contact::set_city(string town)
 {
     city = town;
@@ -74,7 +83,7 @@ void Contact::set_city(string town)
 
 void Contact::set_zip(string zc)
 {
-    zc = zipCode;
+    zipCode = zc;
 }
 
 void Contact::set_state(string st)
@@ -82,41 +91,72 @@ void Contact::set_state(string st)
     state = st;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////
+//OVERLOADED OPERATORS
+/////////////////////////////////////////////////////////////////////////////////////
 
-
-int Contact::operator<(Contact con1, Contact con2)
+bool Contact::operator<(Contact con)
 {
-    if (con1.get_ln.compare(con2.get_ln) == 0)
+    if (lastName < con.get_ln())
     {
-        return (con1.get_fn.compare(con2.get_fn));
+        if (firstName < con.get_fn())
+        {
+            return true;
+        }
+        return false;
     }
-    return con1.get_ln.compare(con2.get_ln);
-    
+    return false;
+}
+
+bool Contact::operator==(Contact con)
+{
+    if (lastName == con.get_ln() && firstName == con.get_fn())
+    { 
+        return true;
+    }
+    return false;
 }
 
 istream &operator >> (istream &in, Contact &con)
 { 
+    string input;
+
     cout << "Enter First Name: ";
-    cin >> con.firstName;
+    in >> input;
+    con.set_fn(input);
+
     cout << "Enter Last Name: ";
-    cin >> con.lastName;
+    in >> input;
+    con.set_ln(input);
+
     cout << "Enter Phone #: ";
-    cin >> con.phoneNumber;
+    in >> input;
+    con.set_num(input);
+
     cout << "Enter Address: \n";
-    cin >> con.address;
+    in >> input;
+    con.set_addy(input);
+
     cout << "Enter City: ";
-    cin >> con.city;
+    in >> input;
+    con.set_city(input);
+
     cout << "Enter Zip-Code: ";
-    cin >> con.zipCode;
+    in >> input;
+    con.set_zip(input);
+
     cout << "Enter State: ";
-    cin >> con.state;
+    in >> input;
+    con.set_state(input);
+
     return in;
 }
 
 ostream &operator<< (ostream &out, Contact con)
 {
-    out << con.firstName << " " << con.lastName << ": " << con.phoneNumber << endl << con.address + " " + con.city + ", " + con.state + " " + con.zipCode;
+    out << con.firstName + " " + con.lastName + "\n";
+    out << con.phoneNumber + "\n";
+    out << con.address + "\n";
+    out << con.city + " " + con.zipCode + " " + con.state + "\n";
     return out;
 }
-
-
