@@ -74,21 +74,6 @@ void LinkedList::print()
     }
 }
 
-Contact LinkedList::getContact(int i)
-{
-	Contact con;
-	if (i >= 0 && i < getSize())
-	{
-		Node *nNode = first;
-		for (int c = 0; c < i; c++)
-		{
-			nNode = nNode -> next;
-		}
-		return nNode -> nCon;
-	}
-	return con;
-}
-
 /////////////////////////////////////////////////////////////////////////////////////
 //REMOVE FUNCTIONS
 /////////////////////////////////////////////////////////////////////////////////////
@@ -111,7 +96,7 @@ bool LinkedList::removeStart()
 			Node *tempNode = first -> next;    
 			delete first;    
 			first = tempNode;    
-			first->prev = NULL; 
+			first -> prev = NULL; 
 		} 
 	}  
 	return removed; 
@@ -131,10 +116,10 @@ bool LinkedList::removeLast()
 		} 
 		else 
 		{ 
-			Node *tempNode = last->prev;    
+			Node *tempNode = last -> prev;    
 			delete last;    
 			last = tempNode;    
-			last->next = NULL; 
+			last -> next = NULL; 
 		} 
 	}  
 	
@@ -149,7 +134,7 @@ bool LinkedList::remove(string firstN, string lastN)
 		if ((first -> nCon.get_fn() == firstN) && (first -> nCon.get_ln() == lastN))
 		{
 			removed = true;
-			Node *tempNode = first->next;
+			Node *tempNode = first -> next;
 			delete first;
 			first = tempNode;
 			--listSize;
@@ -162,12 +147,12 @@ bool LinkedList::remove(string firstN, string lastN)
 			while (findNode != NULL && findNode -> nCon.get_fn() != firstN && findNode -> nCon.get_ln() != lastN)
 			{
 				prevNode = findNode;
-				findNode = findNode->next;
+				findNode = findNode -> next;
 			}
 			if (findNode != NULL)
 			{
 				removed = true;
-				prevNode->next = findNode->next;
+				prevNode -> next = findNode -> next;
 				delete findNode;
 				--listSize;
 			}
@@ -197,13 +182,13 @@ bool LinkedList::remove(int index)
 			while (count < index)
 			{
 				prev = findNode;
-				findNode = findNode->next;
+				findNode = findNode -> next;
 				count++;
 			}
 
 			Node *delNode = findNode;
 			removed = true;
-			prev->next = findNode->next;
+			prev -> next = findNode -> next;
 			delete delNode;
 		}
 

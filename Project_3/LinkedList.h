@@ -36,16 +36,6 @@ public:
     //@return = size of list
     int getSize();
 
-    //Grabs index of a contact
-    //@param = index of contact in list
-    //@return contact from index
-    Contact getContact(int);
-
-    //Sets a contact to set index
-    //@param index = index of contact in list
-    //@param con = contact to place in index chosen
-    void setIndex(int index, Contact con);
-    
     //adds a new contact to the end of LinkedList
     void add2End(Contact con);
     
