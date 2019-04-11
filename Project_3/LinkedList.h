@@ -2,8 +2,6 @@
 #define LINKEDLIST_H
 
 #include "contact.h"
-#include <iostream>
-using namespace std;
 
 class LinkedList
 {
@@ -22,19 +20,14 @@ private:
     Node *last;
     int listSize;
 
-    void swap(Node* left, Node* right);
-
 public:
     //Default constructor; sets first to null
-    LinkedList() 
-    { 
-        first = NULL; 
-        last = NULL;
-        listSize = 0;
-    }
-    
+    LinkedList();
+
     //Default destructor to delete created LinkedList
     ~LinkedList(); 
+    
+    void write(ofstream &file);
     
     //checks to see if the LinkedList is empty
     bool isEmpty() { return first == NULL; }
@@ -42,6 +35,16 @@ public:
     //Goes through linked list and gets size of list
     //@return = size of list
     int getSize();
+
+    //Grabs index of a contact
+    //@param = index of contact in list
+    //@return contact from index
+    Contact getContact(int);
+
+    //Sets a contact to set index
+    //@param index = index of contact in list
+    //@param con = contact to place in index chosen
+    void setIndex(int index, Contact con);
     
     //adds a new contact to the end of LinkedList
     void add2End(Contact con);
@@ -49,17 +52,31 @@ public:
     //Displays contents of LinkedList
     void print(); 
 
-    bool search(string input);
-
+    //////////////Remove functions
+    //
     bool removeStart();
+    
+    //
     bool removeLast();
+    
+    //remove a contact by first + last name
+    //@param = first = first name
+    //@param = last = last name
+    //@return = if true then contact is removed, else contact not found
     bool remove(string first, string last);
+    
+    //Remove contact by index
+    //@param = index
+    //@return = if true then contact is removed, else contact not found
     bool remove(int);
 
+    //Sorts list in alphabetical order
     void sort();
 
+    ///////////////Search functions
+    // bool search(string input);
     LinkedList *searchAs(string target, char option);
-    Contact* searchAs(string first, string last);
+    Contact* modSearch(string first, string last);
 
     friend ostream& operator<<(ostream& out, LinkedList &con);
 };

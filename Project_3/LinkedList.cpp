@@ -1,7 +1,31 @@
 #include "LinkedList.h"
-#include <iostream>
-#include <string>
-using namespace std;
+
+/////////////////////////////////////////////////////////////////////////////////////
+//Constructors/Destructors
+/////////////////////////////////////////////////////////////////////////////////////
+LinkedList::LinkedList() 
+    { 
+        first = NULL; 
+        last = NULL;
+        listSize = 0;
+    }
+
+//Default destructor for the LinkedList to delete the create pointers
+LinkedList::~LinkedList() 
+{ 
+    Node *nextNode; 
+    Node *nodePtr = first; 
+    while (nodePtr != NULL) 
+    { 
+        nextNode = nodePtr->next; 
+        delete nodePtr; 
+        nodePtr = nextNode; 
+    } 
+}
+
+/////////////////////////////////////////////////////////////////////////////////////
+//Other Functions
+/////////////////////////////////////////////////////////////////////////////////////
 
 //Adds a new square to the end of the list
 //@param = passes user input in con object
@@ -50,18 +74,24 @@ void LinkedList::print()
     }
 }
 
-//Default destructor for the LinkedList to delete the create pointers
-LinkedList::~LinkedList() 
-{ 
-    Node *nextNode; 
-    Node *nodePtr = first; 
-    while (nodePtr != NULL) 
-    { 
-        nextNode = nodePtr->next; 
-        delete nodePtr; 
-        nodePtr = nextNode; 
-    } 
+Contact LinkedList::getContact(int i)
+{
+	Contact con;
+	if (i >= 0 && i < getSize())
+	{
+		Node *nNode = first;
+		for (int c = 0; c < i; c++)
+		{
+			nNode = nNode -> next;
+		}
+		return nNode -> nCon;
+	}
+	return con;
 }
+
+/////////////////////////////////////////////////////////////////////////////////////
+//REMOVE FUNCTIONS
+/////////////////////////////////////////////////////////////////////////////////////
 
 //removing the first name 
 bool LinkedList::removeStart()
@@ -182,6 +212,10 @@ bool LinkedList::remove(int index)
 	return removed;
 }
 
+
+/////////////////////////////////////////////////////////////////////////////////////
+//SEARCH FUNCTIONS
+/////////////////////////////////////////////////////////////////////////////////////
 LinkedList* LinkedList::searchAs(string target, char option)
 {
     LinkedList *searchList = new LinkedList();
@@ -190,19 +224,20 @@ LinkedList* LinkedList::searchAs(string target, char option)
 	Node *cNode = first;
 	while (cNode)
 	{
-        //search by last name
+        //search by first + last
 		if (option == 'A' || option == 'a')
 		{
-			if (cNode -> nCon.get_ln() == target)
+			
+			if (cNode -> nCon.get_fn() + " " + cNode -> nCon.get_ln() == target)
 			{
 				searchList -> add2End(cNode -> nCon);
 			}
 		}
         
-        //Search by first + last name
+        //Search by last name
 		else if (option == 'B' || option == 'b')
 		{
-			if (cNode -> nCon.get_fn() + " " + cNode -> nCon.get_ln() == target)
+			if (cNode -> nCon.get_ln() == target)
 			{
 				searchList -> add2End(cNode -> nCon);
 			}
@@ -221,7 +256,8 @@ LinkedList* LinkedList::searchAs(string target, char option)
 	}
 	return searchList;
 }
-Contact* LinkedList::searchAs(string first_name, string last_name)
+
+Contact* LinkedList::modSearch(string first_name, string last_name)
 {
 	Contact search_for;
 	search_for.set_fn(first_name);
@@ -231,24 +267,83 @@ Contact* LinkedList::searchAs(string first_name, string last_name)
 	while (current)
 	{
 		if (current->nCon == search_for) {
-			return &current->nCon;
+			return &current -> nCon;
 		}
 
-		current = current->next;
+		current = current -> next;
 	}
 
 	return NULL;
 }
+
+/////////////////////////////////////////////////////////////////////////////////////
+//SORT
+/////////////////////////////////////////////////////////////////////////////////////
+void LinkedList::sort()
+{
+	Node *nPtr1 = first;
+	Node *nPtr2 = NULL;
+	bool swap = false;
+	
+	if(isEmpty()){
+		return;
+	}
+	
+	do{
+		swap = false;
+		nPtr1 = first;		
+    	
+		while(nPtr1 -> next != nPtr2){
+			
+			if( nPtr1 -> next -> nCon < nPtr1 -> nCon){
+				
+				Contact tempCon;
+				tempCon = nPtr1->nCon;
+				nPtr1 -> nCon = nPtr1 -> next -> nCon;
+				nPtr1 -> next -> nCon = tempCon;
+				swap = true;
+					
+			}
+			nPtr1 = nPtr1->next;
+		}
+		nPtr2 = nPtr1;			
+	}
+	while(swap);	
+}
+
+/////////////////////////////////////////////////////////////////////////////////////
+//WRITE TO FILE
+/////////////////////////////////////////////////////////////////////////////////////
+void LinkedList::write(ofstream &file)
+{
+	Node *current = first;
+
+	while (current != NULL)
+	{
+		file << current -> nCon.get_fn() << ',' << current -> nCon.get_ln() << ',' << current -> nCon.get_num() << ',' << current -> nCon.get_addy() << ',' << current -> nCon.get_city() << ',' << current -> nCon.get_zip() << ',' << current -> nCon.get_state();
+		current = current -> next;
+		if (current != NULL)
+		{
+			file << '\n';
+		}
+	}
+}
+
+/////////////////////////////////////////////////////////////////////////////////////
+//OVERLOADED OPERATOR
+/////////////////////////////////////////////////////////////////////////////////////
+
 ostream& operator<<(ostream& os,  LinkedList& c)
 {
-	LinkedList::Node* current = c.first;
+	LinkedList::Node *last;
+	last = c.first;
 	int i = 1;
-	while (current)
-	{
-		os << setw(2) << i << ".";
-		os << current->value << "\n";
-		current = current->next;
+	while(last != NULL){
+		os << i << ". ";
+		os << last -> nCon << "\n";
+		last = last -> next;
 		i++;
 	}
+	cout<<endl;
 	return os;
 }
