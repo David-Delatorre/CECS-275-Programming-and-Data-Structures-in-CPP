@@ -17,21 +17,6 @@ Contact::Contact()
     state = " ";
 }
 
-//Overloaded constructor
-//@param fn = first name
-//@param ln = last name
-//Allows user input for first + last name
-Contact::Contact(string fn, string ln)
-{
-    firstName = fn;
-    lastName = ln;
-    phoneNumber = " ";
-    address = " ";
-    city = " ";
-    zipCode = " ";
-    state = " ";
-}
-
 Contact::Contact(string fn, string ln, string pn, string addy, string nCity, string zc, string nState)
 {
     firstName = fn;

@@ -31,11 +31,6 @@ class Contact
         //default constructor
         Contact();
 
-        //Overloaded constructor
-        //@param = fn = first name
-        //@param = ln = last name
-        Contact(string fn, string ln);
-
         //Overloaded constructor 
         //@param = fn = first name
         //@param = ln = last name
