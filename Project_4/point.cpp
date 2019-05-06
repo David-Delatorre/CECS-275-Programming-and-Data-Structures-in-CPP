@@ -10,7 +10,7 @@ private:
 	int y;
 
 public:
-    // Point  default constructor
+    //Default constructor
 	Point() 
     {
         //initializes both to 0;
@@ -18,9 +18,9 @@ public:
         y = 0;
     } 
 	
+	//Overloaded constructor
     // @param takes in a parameter of int data type
     // @param takes in a parameter of int data type
-	
 	Point(int r, int c) 
 	{
         //assign x to row
@@ -29,8 +29,8 @@ public:
 		y = c; 
 	}
 
-	
-	//@returns an interger for Point x
+	//Gets the X coordinate point
+	//@returns coordinate point x
 	
 	int getX() 
 	{
@@ -38,8 +38,8 @@ public:
 	}
 
 	
-	//@returns an integer for Point y
-	
+	//Gets the Y coordinate point
+	//@returns coordinate point y
 	int getY()
 	{
 		return y;
