@@ -1,10 +1,16 @@
+/*
+Name: Louis Monfiero
+ID: 016336266
+Description: Solve a maze by one of three methods, BFS, DFS, and manually
+*/
+
 #include "Point.cpp"
-#include <iostream> 
+#include <iostream>
 #include <fstream>
+#include <string>
 #include <vector>
 #include <stack>
 #include <queue>
-#include <string>
 using namespace std;
 
 //Gets an integer between low int and high int (inclusive)
@@ -33,6 +39,8 @@ int getIntRange(int low, int high) {
 	return input;
 }
 
+//Lets user select a maze; options between 1 to 5 (inclusive)
+//@return = maze they chose
 int mazeSelMenu()
 {
 	cout << "\n1. Maze #1\n2. Maze #2\n3. Maze #3\n4. Maze #4\n5. Quit\nUser Selection: ";
@@ -40,6 +48,8 @@ int mazeSelMenu()
 	return choice;
 }
 
+//Lets user choose a method of solving: 1 = DFS, 2 = BFS, and 3 = manual
+//@return = choice in solving
 int solveMenu()
 {
 	cout << "Choose Method to Solve Maze:\n1. DFS (Depth First Search)\n2. BFS (Breadth First Search)\n3. Do Yourself\nUser Selection: ";
@@ -47,13 +57,20 @@ int solveMenu()
 	return choice;
 }
 
+//Lets user choose a direction in which to move; 1 = up, 2 = down, 3 = left, 4 = right, 5 = solve by DFS if possible
+//@return = user choice in direction/bfs
 int moveMenu()
 {
-	cout << "1. Move Up\n2. Move Down\n3. Move Left\n4. Move Right\n5. Solve By DFS." << endl;
+	cout << "\n1. Move Up\n2. Move Down\n3. Move Left\n4. Move Right\n5. Solve By DFS.\nUser Selection: " << endl;
 	int choice = getIntRange(1, 5);
 	return choice;
 }
 
+//User grabs maze with file name "maze<insertnumberhere>.txt" 
+//@param file = name of maze to select
+//@param r = rows
+//@param c = column
+//@return = vector of char filled with characters read from file
 vector<char> getMaze(string file, int r, int c) {
 	vector<char> maze;
 	int count = 0;
@@ -81,9 +98,9 @@ vector<char> getMaze(string file, int r, int c) {
 		int total = -1;
 		int counter = -1;
 		int newNum = 0;
-		for (int h = 0; h < c; h++) {
-			c++;
-			for (int w = 0; w < r; w++) {
+		for (int a = 0; a < c; a++) {
+			count++;
+			for (int b = 0; b < r; b++) {
 				total++;
 				newNum = c * count + count;
 				while (mazes.get(input) && total != (newNum)) {
@@ -105,6 +122,9 @@ vector<char> getMaze(string file, int r, int c) {
 	return maze;
 }
 
+//Counts the rows inside the maze
+//@param = name of file to look at
+//@return = rows in maze
 int getRow(string filename)
 {
 	fstream file;
@@ -125,6 +145,9 @@ int getRow(string filename)
 	return row;
 }
 
+//Counts the columns inside the maze
+//@param = name of file to look at
+//@return = columns in maze
 int getCol(string filename)
 {
 	fstream file;
@@ -143,10 +166,11 @@ int getCol(string filename)
 	return col;
 }
 
+
 int main()
 {
-	bool bigLoop = true;
-	bool babyLoop = true;
+	bool bigLoop = true;//Used for outter loop
+	bool babyLoop = true;//Used for any other smaller loops inside
 	while (bigLoop)
 	{
 		int row, col;
@@ -155,6 +179,7 @@ int main()
 		//Initialize Stack/Queue with point
 		stack<Point> dfs;//Stack is used for dfs
 		queue<Point> bfs;//Queue is used for bfs
+		stack<Point> dys;//Do yourself 
 
 		//Quits function
 		if (mChoice == 5)
@@ -163,16 +188,17 @@ int main()
 			break;
 		}
 
-		string mazeSel = "maze" + to_string(mChoice) + ".txt";
-		row = getRow(mazeSel);
-		col = getCol(mazeSel);
-		cout << "Maze Dimensions: " << row << " x " << col << "\n\n";
-		vector <char> mazeVec = getMaze(mazeSel, row, col);
-		char mazeArr[row][col];
-		int count = 0;
+		string mazeSel = "maze" + to_string(mChoice) + ".txt";//Chooses maze file to use
+		row = getRow(mazeSel);//grabs rows
+		col = getCol(mazeSel);//grabs columns
+
+		cout << "Maze Dimensions: " << row << " x " << col << "\n\n";//prints out maze dimensions
+		vector<char> mazeVec = getMaze(mazeSel, row, col);
+		char mazeArr[row][col];//puts characters in vector into an array
 
 		cout << "You've Chosen Maze #" << mChoice << endl;
 		//STORE MAZE (vector) TO ARRAY
+		int count = 0;//used to count characters in vector
 		for (int i = 0; i < col; i++)
 		{
 			for (int j = 0; j < row; j++)
@@ -190,13 +216,12 @@ int main()
 			cout << endl;
 		}
 
-		int solveMethod = mazeSelMenu();
-
+		int solveMethod = solveMenu();
 		//Gets the coordinates of start point
 		int startP1, startP2;
 		for (int i = 0; i < col; i++)
 		{
-			for (int j; j < row; j++)
+			for (int j = 0; j < row; j++)
 			{
 				if (mazeArr[j][i] == 's')
 				{
@@ -214,12 +239,12 @@ int main()
 		//Solves the maze by DFS
 		if (solveMethod == 1)
 		{
+			
 			babyLoop = true;
 			dfs.push(startPoint);
 			while (babyLoop)
 			{
 				point = dfs.top();
-				dfs.pop();
 
 				if (mazeArr[point.getX()][point.getY()] == 'f')
 				{
@@ -231,36 +256,39 @@ int main()
 				{
 					//Places a . at the current point
 					mazeArr[point.getX()][point.getY()] = '.';
-
 					dfs.pop();
 
 					//Only places points if point selected is an empty space 
 					//ie not a wall *, or a point .
+
 					//Down
-					if (mazeArr[point.getX() + 1][point.getY()] != '*' && mazeArr[point.getX() + 1][point.getY()] != '.') 
-					{
-						dfs.push(Point(point.getX() + 1, point.getY()));
-					}
-					//Up
-					if (mazeArr[point.getX() - 1][point.getY()] != '*' && mazeArr[point.getX() - 1][point.getY()] != '.') 
-					{
-						dfs.push(Point(point.getX() - 1, point.getY()));
-					}
-					//Right
 					if (mazeArr[point.getX()][point.getY() + 1] != '*' && mazeArr[point.getX()][point.getY() + 1] != '.') 
 					{
 						dfs.push(Point(point.getX(), point.getY() + 1));
 					}
-					//Left
+
+					//Up
 					if (mazeArr[point.getX()][point.getY() - 1] != '*' && mazeArr[point.getX()][point.getY() - 1] != '.') 
 					{
 						dfs.push(Point(point.getX(), point.getY() - 1));
+					}
 
+					//Right
+					if (mazeArr[point.getX() + 1][point.getY()] != '*' && mazeArr[point.getX() + 1][point.getY()] != '.') 
+					{
+						dfs.push(Point(point.getX() + 1, point.getY()));
+					}
+					
+					//Left
+					if (mazeArr[point.getX() - 1][point.getY()] != '*' && mazeArr[point.getX() - 1][point.getY()] != '.') 
+					{
+						dfs.push(Point(point.getX() - 1, point.getY()));
 					}
 				}
 
-				//DISPLAYS MAZE
 			}
+
+			//DISPLAYS MAZE
 			for (int i = 0; i < col; i++)
 			{
 				for (int j = 0; j < row; j++)
@@ -291,20 +319,27 @@ int main()
 
 				else
 				{
-					m[point.getX()][point.getY()] = '.';
+					mazeArr[point.getX()][point.getY()] = '.';
 					bfs.pop();
+					//Right
 					if (mazeArr[point.getX() + 1][point.getY()] != '*' && mazeArr[point.getX() + 1][point.getY()] != '.') 
 					{
 						bfs.push(Point(point.getX() + 1, point.getY()));
 					}
+
+					//Left
 					if (mazeArr[point.getX() - 1][point.getY()] != '*' && mazeArr[point.getX() - 1][point.getY()] != '.') 
 					{
 						bfs.push(Point(point.getX() - 1, point.getY()));
 					}
+					
+					//Down
 					if (mazeArr[point.getX()][point.getY() + 1] != '*' && mazeArr[point.getX()][point.getY() + 1] != '.') 
 					{
 						bfs.push(Point(point.getX(), point.getY() + 1));
 					}
+
+					//Up
 					if (mazeArr[point.getX()][point.getY() - 1] != '*' && mazeArr[point.getX()][point.getY() - 1] != '.') 
 					{
 						bfs.push(Point(point.getX(), point.getY() - 1));
@@ -312,6 +347,7 @@ int main()
 				}
 
 			}
+			
 			//DISPLAY MAZE
 			for (int i = 0; i < col; i++)
 			{
@@ -328,92 +364,204 @@ int main()
 		//START DO IT YOURSELF METHOD
 		else if (solveMethod == 3)
 		{
-			int movement = moveMenu();
-			dfs.push(startPoint);
+			dys.push(startPoint);
 			babyLoop = true;
+			bool solved = false;
 			while (babyLoop)
 			{
+				Point point = dys.top();
+				int movement = moveMenu();
+
 				//Up
 				if (movement == 1)
 				{
-
-					//if space then it is an available spot
-					if (m[point.getX()][point.getY() - 1] == ' ')
+					//Chosen direction is available
+					if (mazeArr[point.getX()][point.getY() - 1] == ' ')
 					{
-						y -= 1;
-						m[x][y] = '.';
+						dys.push(Point(point.getX(), point.getY() - 1));
+						point = dys.top();
+						mazeArr[point.getX()][point.getY()] = '.';
 					}
-					//if 'f' end the game and display end message
-					else if (m[point.getX()][point.getY() - 1] == 'f')
+					//Finish line reached
+					else if (mazeArr[point.getX()][point.getY() - 1] == 'f')
 					{
-						cout << "WE'RE IN THE ENDGAME NOW!" << endl;
-						//end and bring to MAZE MENU
+						cout << "Maze finished!" << endl;
 						babyLoop = false;
+						solved = true;
 						break;
 					}
 
+					else
+					{
+						cout << "\nYou can't move this way.\n";
+					}
+
 				}
+
 				//Down
 				else if (movement == 2)
 				{
-					//if space then it is an available spot
-					if (m[point.getX()][point.getY() + 1] == ' ')
+					//Chosen direction is available
+					if (mazeArr[point.getX()][point.getY() + 1] == ' ')
 					{
-						y += 1;
+						dys.push(Point(point.getX(), point.getY() + 1));
+						point = dys.top();
 						mazeArr[point.getX()][point.getY()] = '.';
 					}
 
-					//if 'f' end the game and display end message
-					else if (m[point.getX()][point.getY() + 1] == 'f')
+					//Finish line reached
+					else if (mazeArr[point.getX()][point.getY() + 1] == 'f')
 					{
-						cout << "WE'RE IN THE ENDGAME NOW!" << endl;
-						//end and bring to MAZE MENU
+						cout << "Maze finished!" << endl;
 						babyLoop = false;
+						solved = true;
 						break;
 					}
+
+					else
+					{
+						cout << "\nYou can't move this way.\n";
+					}
 				}
+
 				//Left
 				else if (movement == 3)
 				{
 
-					//if space then it is an available spot
-					if (m[point.getX() - 1][point.getY()] == ' ')
+					//Chosen direction is available
+					if (mazeArr[point.getX() - 1][point.getY()] == ' ')
 					{
-						x -= 1;
-						m[x][y] = '.';
+						dys.push(Point(point.getX() - 1, point.getY()));
+						point = dys.top();
+						mazeArr[point.getX()][point.getY()] = '.';
 					}
-					//if 'f' end the game and display end message
-					else if (m[point.getX() - 1][point.getY()] == 'f')
+					//Finish line reached
+					else if (mazeArr[point.getX() - 1][point.getY()] == 'f')
 					{
-						cout << "WE'RE IN THE ENDGAME NOW!" << endl;
+						cout << "Maze finished!" << endl;
 						//end and bring to MAZE MENU
 						babyLoop = false;
+						solved = true;
 						break;
 					}
+
+					else
+					{
+						cout << "\nYou can't move this way.\n";
+					}
 				}
+
 				//Right
 				else if (movement == 4)
 				{
-					//if space then it is an available spot
-					if (m[point.getX() + 1][point.getY()] == ' ')
+					//Chosen direction is available
+					if (mazeArr[point.getX() + 1][point.getY()] == ' ')
 					{
-						x += 1;
-						m[x][y] = '.';
+						dys.push(Point(point.getX() + 1, point.getY()));
+						point = dys.top();
+						mazeArr[point.getX()][point.getY()] = '.';
 					}
-					//if 'f' end the game and display end message
-					else if (m[point.getX() + 1][point.getY()] == 'f')
+
+					//Finish line reached
+					else if (mazeArr[point.getX() + 1][point.getY()] == 'f')
 					{
-						cout << "WE'RE IN THE ENDGAME NOW!" << endl;
-						//end and bring to MAZE MENU
+						cout << "Maze finished!" << endl;
 						babyLoop = false;
+						solved = true;
 						break;
 					}
+
+					else
+					{
+						cout << "\nYou can't move this way.\n";
+					}
 				}
 
+				//Solves DFS from the start point
 				else if (movement == 5)
 				{
+					bool dfsWorks = true;
+					babyLoop = true;
+					//Copy pasted from previous DFS method
+					while (babyLoop)
+					{
+						point = dys.top();
 
+						if (mazeArr[point.getX()][point.getY()] == 'f')
+						{
+							cout << "Maze solved.\n";
+							solved = true;
+							babyLoop = false;
+						}
+
+						else
+						{
+							//Places a . at the current point
+							mazeArr[point.getX()][point.getY()] = '.';
+							dys.pop();
+
+							//Only places points if point selected is an empty space 
+							//ie not a wall *, or a point .
+
+							//Down
+							if (mazeArr[point.getX()][point.getY() + 1] != '*' && mazeArr[point.getX()][point.getY() + 1] != '.') 
+							{
+								dys.push(Point(point.getX(), point.getY() + 1));
+							}
+
+							//Up
+							if (mazeArr[point.getX()][point.getY() - 1] != '*' && mazeArr[point.getX()][point.getY() - 1] != '.') 
+							{
+								dys.push(Point(point.getX(), point.getY() - 1));
+							}
+
+							//Right
+							if (mazeArr[point.getX() + 1][point.getY()] != '*' && mazeArr[point.getX() + 1][point.getY()] != '.') 
+							{
+								dys.push(Point(point.getX() + 1, point.getY()));
+							}
+							
+							//Left
+							if (mazeArr[point.getX() - 1][point.getY()] != '*' && mazeArr[point.getX() - 1][point.getY()] != '.') 
+							{
+								dys.push(Point(point.getX() - 1, point.getY()));
+							}
+
+							//DFS doesn't work at selected point
+							if (dys.empty())
+							{
+								point = dys.top();
+								dys.pop();
+							}
+						}
+
+					}
 				}
+
+				//Displays maze if not yet solved, otherwise, nah
+				if (!solved)
+				{
+					//DISPLAY MAZE
+					for (int i = 0; i < col; i++)
+					{
+						for (int j = 0; j < row; j++)
+						{
+							cout << mazeArr[j][i];
+						}
+						cout << endl;
+					}
+				}
+		
+			}
+			
+			//DISPLAY MAZE
+			for (int i = 0; i < col; i++)
+			{
+				for (int j = 0; j < row; j++)
+				{
+					cout << mazeArr[j][i];
+				}
+				cout << endl;
 			}
 
 		}
@@ -421,4 +569,5 @@ int main()
 
 		
 	}
+	return 0;
 }
