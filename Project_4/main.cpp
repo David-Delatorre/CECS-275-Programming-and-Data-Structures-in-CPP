@@ -188,6 +188,7 @@ int main()
 			break;
 		}
 
+<<<<<<< HEAD
 		string mazeSel = "maze" + to_string(mChoice) + ".txt";//Chooses maze file to use
 		row = getRow(mazeSel);//grabs rows
 		col = getCol(mazeSel);//grabs columns
@@ -195,6 +196,15 @@ int main()
 		cout << "Maze Dimensions: " << row << " x " << col << "\n\n";//prints out maze dimensions
 		vector<char> mazeVec = getMaze(mazeSel, row, col);
 		char mazeArr[row][col];//puts characters in vector into an array
+=======
+		string mazeSel = "maze" + to_string(mChoice) + ".txt";
+		row = getRow(mazeSel);
+		col = getCol(mazeSel);
+		cout << "Maze Dimensions: " << row << " x " << col << "\n\n";
+		vector<char> mazeVec = getMaze(mazeSel, row, col);
+		char mazeArr[row][col];
+		int count = 0;
+>>>>>>> 43a2d8e684f3ac142b651ef341530e4374c81d1a
 
 		cout << "You've Chosen Maze #" << mChoice << endl;
 		//STORE MAZE (vector) TO ARRAY
@@ -261,6 +271,7 @@ int main()
 					//Only places points if point selected is an empty space 
 					//ie not a wall *, or a point .
 
+<<<<<<< HEAD
 					//Down
 					if (mazeArr[point.getX()][point.getY() + 1] != '*' && mazeArr[point.getX()][point.getY() + 1] != '.') 
 					{
@@ -273,15 +284,36 @@ int main()
 						dfs.push(Point(point.getX(), point.getY() - 1));
 					}
 
+=======
+>>>>>>> 43a2d8e684f3ac142b651ef341530e4374c81d1a
 					//Right
 					if (mazeArr[point.getX() + 1][point.getY()] != '*' && mazeArr[point.getX() + 1][point.getY()] != '.') 
 					{
 						dfs.push(Point(point.getX() + 1, point.getY()));
 					}
+<<<<<<< HEAD
 					
+=======
+
+>>>>>>> 43a2d8e684f3ac142b651ef341530e4374c81d1a
 					//Left
 					if (mazeArr[point.getX() - 1][point.getY()] != '*' && mazeArr[point.getX() - 1][point.getY()] != '.') 
 					{
+<<<<<<< HEAD
+=======
+						dfs.push(Point(point.getX(), point.getY() - 1));
+					}
+
+					//Down
+					if (mazeArr[point.getX() + 1][point.getY()] != '*' && mazeArr[point.getX() + 1][point.getY()] != '.') 
+					{
+						dfs.push(Point(point.getX() + 1, point.getY()));
+					}
+					
+					//Up
+					if (mazeArr[point.getX() - 1][point.getY()] != '*' && mazeArr[point.getX() - 1][point.getY()] != '.') 
+					{
+>>>>>>> 43a2d8e684f3ac142b651ef341530e4374c81d1a
 						dfs.push(Point(point.getX() - 1, point.getY()));
 					}
 				}
@@ -503,25 +535,41 @@ int main()
 							//Only places points if point selected is an empty space 
 							//ie not a wall *, or a point .
 
+<<<<<<< HEAD
 							//Down
+=======
+							//Right
+>>>>>>> 43a2d8e684f3ac142b651ef341530e4374c81d1a
 							if (mazeArr[point.getX()][point.getY() + 1] != '*' && mazeArr[point.getX()][point.getY() + 1] != '.') 
 							{
 								dys.push(Point(point.getX(), point.getY() + 1));
 							}
 
+<<<<<<< HEAD
 							//Up
+=======
+							//Left
+>>>>>>> 43a2d8e684f3ac142b651ef341530e4374c81d1a
 							if (mazeArr[point.getX()][point.getY() - 1] != '*' && mazeArr[point.getX()][point.getY() - 1] != '.') 
 							{
 								dys.push(Point(point.getX(), point.getY() - 1));
 							}
 
+<<<<<<< HEAD
 							//Right
+=======
+							//Down
+>>>>>>> 43a2d8e684f3ac142b651ef341530e4374c81d1a
 							if (mazeArr[point.getX() + 1][point.getY()] != '*' && mazeArr[point.getX() + 1][point.getY()] != '.') 
 							{
 								dys.push(Point(point.getX() + 1, point.getY()));
 							}
 							
+<<<<<<< HEAD
 							//Left
+=======
+							//Up
+>>>>>>> 43a2d8e684f3ac142b651ef341530e4374c81d1a
 							if (mazeArr[point.getX() - 1][point.getY()] != '*' && mazeArr[point.getX() - 1][point.getY()] != '.') 
 							{
 								dys.push(Point(point.getX() - 1, point.getY()));
@@ -534,6 +582,7 @@ int main()
 								dys.pop();
 							}
 						}
+<<<<<<< HEAD
 
 					}
 				}
@@ -551,6 +600,23 @@ int main()
 						cout << endl;
 					}
 				}
+=======
+
+					}
+				}
+				if (!solved)
+				{
+					//DISPLAY MAZE
+					for (int i = 0; i < col; i++)
+					{
+						for (int j = 0; j < row; j++)
+						{
+							cout << mazeArr[j][i];
+						}
+						cout << endl;
+					}
+				}
+>>>>>>> 43a2d8e684f3ac142b651ef341530e4374c81d1a
 		
 			}
 			
